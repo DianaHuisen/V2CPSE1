@@ -1,0 +1,22 @@
+
+.PHONY: build clean
+
+build: generator
+
+clean:
+	rm generator generator.o rtttl_player.o my_player.o
+
+generator: generator.o rtttl_player.o my_player.o
+	g++ -std=c++17 generator.o rtttl_player.o my_player.o -o generator
+
+generator.o: generator.cpp my_player.hpp rtttl_player.hpp
+	g++ -std=c++17 -c generator.cpp -o generator.o
+
+rtttl_player.o: rtttl_player.cpp rtttl_player.hpp note_player.hpp
+	g++ -std=c++17 -c rtttl_player.cpp -o rtttl_player.o
+
+my_player.o: my_player.cpp my_player.hpp note_player.hpp 
+	g++ -std=c++17 -c my_player.cpp -o my_player.o
+    
+melody.cpp : meldody.cpp generator
+	./generator
